@@ -2,8 +2,8 @@
     require_once "boards/lib.php";
     ini_set('display_errors', 1);
 
-    $board = $_POST["board"];
-    $thread = $_POST["thread"];
+    $board = htmlspecialchars($_POST["board"]);
+    $thread = htmlspecialchars($_POST["thread"]);
     
     $realanswer = $_POST["realanswer"];
     $captchaanswer = $_POST["answer"];
