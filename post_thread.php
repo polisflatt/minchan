@@ -7,7 +7,7 @@
     ini_set('display_errors', 1);
 
 
-    $board = $_POST["board"];
+    $board = htmlspecialchars($_POST["board"]);
     $name = htmlspecialchars($_POST["name"]);
     $contents = htmlspecialchars($_POST["contents"]);
 
