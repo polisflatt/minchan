@@ -1,5 +1,11 @@
+<head>
+        <link rel="stylesheet" href="styles.css">
+</head>
+
 <?php
     require_once "boards/lib.php";
+    require_once "settings.php";
+
     ini_set('display_errors', 1);
 
     $board = htmlspecialchars($_POST["board"]);
@@ -14,10 +20,20 @@
     }
 
 
+    /* Variables */
     $name = htmlspecialchars($_POST["name"]);
     $contents = htmlspecialchars($_POST["contents"]);
 
+    if (strlen($contents) > $char_limit)
+    {
+        die("<center><h1>Reply exceeded $char_limited chars charlimit</h1></center>");
+    }
+
     $tripcode = get_tripcode_password($name);
+
+    /* Same as in post_thread.php */
+    /* It really is just the same. */
+
 
     if (!!$tripcode)
     {

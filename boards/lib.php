@@ -28,6 +28,18 @@
         return $json;
     }
 
+ 
+
+    function board_delete_thread($board_name, $thread)
+    {
+        
+        unlink("boards/$board_name/threads/$thread/thread.json");
+        unlink("boards/$board_name/threads/$thread/replies.json");
+        
+        rmdir("boards/$board_name/threads/$thread"); 
+    }
+
+
     /* Post a thread to the board in question. Title is unused */
     function board_post_thread($board_name, $id, $contents, $author = "Anonymous")
     {
@@ -137,11 +149,11 @@
             }
             else if (strStartsWith($line, "&gt;"))
             {
-                print("<p class='greentext'>$line</p>");
+                print("<span class='greentext'>$line</span><br>");
             }
             else
             {
-                print("<p>$line</p>");
+                print("<span>$line</span><br>");
             }
         }
     }
@@ -183,8 +195,15 @@
     /* Extract the tripcode password out of a username */
     function get_tripcode_password($username)
     {
-        $tripcode = explode("#", $username)[1]; /* Obtain text after the #, which is the password */
-        return $tripcode;
+        try
+        {
+            $tripcode = explode("#", $username)[1]; /* Obtain text after the #, which is the password */
+            return $tripcode;
+        }
+        catch (Exception $e)
+        {
+            return false;
+        }
     }
 
     /* Generate a tripcode on basis of username and password, hashed by SHA256 */
